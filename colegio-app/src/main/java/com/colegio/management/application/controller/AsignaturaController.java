@@ -1,5 +1,6 @@
 package com.colegio.management.application.controller;
 
+import com.colegio.management.application.dto.AsignaturaDTO;
 import com.colegio.management.application.service.asignatura.AsignaturaService;
 import com.colegio.management.domain.model.Asignatura;
 import lombok.RequiredArgsConstructor;
@@ -16,26 +17,26 @@ public class AsignaturaController {
     private final AsignaturaService asignaturaService;
 
     @PostMapping
-    public ResponseEntity<Asignatura> crearAsignatura(@RequestBody Asignatura asignatura) {
-        Asignatura nuevaAsignatura = asignaturaService.crearAsignatura(asignatura);
+    public ResponseEntity<AsignaturaDTO> crearAsignatura(@RequestBody Asignatura asignatura) {
+        AsignaturaDTO nuevaAsignatura = asignaturaService.crearAsignatura(asignatura);
         return ResponseEntity.ok(nuevaAsignatura);
     }
 
     @GetMapping
-    public ResponseEntity<List<Asignatura>> obtenerTodasLasAsignaturas() {
-        List<Asignatura> asignaturas = asignaturaService.obtenerTodasLasAsignaturas();
+    public ResponseEntity<List<AsignaturaDTO>> obtenerTodasLasAsignaturas() {
+        List<AsignaturaDTO> asignaturas = asignaturaService.obtenerTodasLasAsignaturas();
         return ResponseEntity.ok(asignaturas);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Asignatura> obtenerAsignaturaPorId(@PathVariable Long id) {
-        Asignatura asignatura = asignaturaService.obtenerAsignaturaPorId(id);
+    public ResponseEntity<AsignaturaDTO> obtenerAsignaturaPorId(@PathVariable Long id) {
+        AsignaturaDTO asignatura = asignaturaService.obtenerAsignaturaPorId(id);
         return ResponseEntity.ok(asignatura);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Asignatura> actualizarAsignatura(@PathVariable Long id, @RequestBody Asignatura detallesAsignatura) {
-        Asignatura asignaturaActualizada = asignaturaService.actualizarAsignatura(id, detallesAsignatura);
+    public ResponseEntity<AsignaturaDTO> actualizarAsignatura(@PathVariable Long id, @RequestBody Asignatura detallesAsignatura) {
+        AsignaturaDTO asignaturaActualizada = asignaturaService.actualizarAsignatura(id, detallesAsignatura);
         return ResponseEntity.ok(asignaturaActualizada);
     }
 

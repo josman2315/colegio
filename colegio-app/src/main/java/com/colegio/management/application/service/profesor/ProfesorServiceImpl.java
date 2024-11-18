@@ -1,9 +1,12 @@
 package com.colegio.management.application.service.profesor;
 
+import com.colegio.management.application.dto.ProfesorDTO;
+import com.colegio.management.application.mapper.ProfesorMapper;
 import com.colegio.management.domain.model.Profesor;
 import com.colegio.management.domain.repository.ProfesorRepository;
 import com.colegio.management.application.dto.ProfesorAsignaturaResponse;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,35 +21,44 @@ public class ProfesorServiceImpl implements ProfesorService {
     private final ProfesorRepository profesorRepository;
 
     @Override
-    public Profesor crearProfesor(Profesor profesor) {
-        return profesorRepository.save(profesor);
+    @Transactional
+    public ProfesorDTO crearProfesor(ProfesorDTO profesorDTO) {
+        Profesor profesor = ProfesorMapper.convertirAEntidad(profesorDTO);
+        Profesor profesorGuardado = profesorRepository.save(profesor);
+        return ProfesorMapper.convertirADTO(profesorGuardado);
     }
 
     @Override
-    public List<Profesor> obtenerTodosLosProfesores() {
-        return profesorRepository.findAll();
+    public List<ProfesorDTO> obtenerTodosLosProfesores() {
+        List<Profesor> profesores = profesorRepository.findAll();
+        return profesores.stream()
+                .map(ProfesorMapper::convertirADTO)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Profesor obtenerProfesorPorId(Long id) {
+    public ProfesorDTO obtenerProfesorPorId(Long id) {
         Optional<Profesor> profesor = profesorRepository.findById(id);
-        return profesor.orElse(null);
+        return profesor.map(ProfesorMapper::convertirADTO).orElse(null);
     }
 
     @Override
-    public Profesor actualizarProfesor(Long id, Profesor detallesProfesor) {
+    @Transactional
+    public ProfesorDTO actualizarProfesor(Long id, ProfesorDTO detallesProfesorDTO) {
         Optional<Profesor> profesorExistenteOpt = profesorRepository.findById(id);
         if (profesorExistenteOpt.isPresent()) {
             Profesor profesorExistente = profesorExistenteOpt.get();
-            profesorExistente.setNombre(detallesProfesor.getNombre());
-            profesorExistente.setAsignaturas(detallesProfesor.getAsignaturas());
-            return profesorRepository.save(profesorExistente);
+            profesorExistente.setNombre(detallesProfesorDTO.getNombre());
+
+            Profesor profesorActualizado = profesorRepository.save(profesorExistente);
+            return ProfesorMapper.convertirADTO(profesorActualizado);
         } else {
             throw new EntityNotFoundException("Profesor no encontrado con id: " + id);
         }
     }
 
     @Override
+    @Transactional
     public void eliminarProfesor(Long id) {
         profesorRepository.deleteById(id);
     }

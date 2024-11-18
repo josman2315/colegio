@@ -1,7 +1,7 @@
 package com.colegio.management.application.controller;
 
+import com.colegio.management.application.dto.ColegioDTO;
 import com.colegio.management.application.service.colegio.ColegioService;
-import com.colegio.management.domain.model.Colegio;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,26 +16,26 @@ public class ColegioController {
     private final ColegioService colegioService;
 
     @PostMapping
-    public ResponseEntity<Colegio> crearColegio(@RequestBody Colegio colegio) {
-        Colegio nuevoColegio = colegioService.crearColegio(colegio);
+    public ResponseEntity<ColegioDTO> crearColegio(@RequestBody ColegioDTO colegio) {
+        ColegioDTO nuevoColegio = colegioService.crearColegio(colegio);
         return ResponseEntity.ok(nuevoColegio);
     }
 
     @GetMapping
-    public ResponseEntity<List<Colegio>> obtenerTodosLosColegios() {
-        List<Colegio> colegios = colegioService.obtenerTodosLosColegios();
+    public ResponseEntity<List<ColegioDTO>> obtenerTodosLosColegios() {
+        List<ColegioDTO> colegios = colegioService.obtenerTodosLosColegios();
         return ResponseEntity.ok(colegios);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Colegio> obtenerColegioPorId(@PathVariable Long id) {
-        Colegio colegio = colegioService.obtenerColegioPorId(id);
+    public ResponseEntity<ColegioDTO> obtenerColegioPorId(@PathVariable Long id) {
+        ColegioDTO colegio = colegioService.obtenerColegioPorId(id);
         return ResponseEntity.ok(colegio);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Colegio> actualizarColegio(@PathVariable Long id, @RequestBody Colegio detallesColegio) {
-        Colegio colegioActualizado = colegioService.actualizarColegio(id, detallesColegio);
+    public ResponseEntity<ColegioDTO> actualizarColegio(@PathVariable Long id, @RequestBody ColegioDTO detallesColegio) {
+        ColegioDTO colegioActualizado = colegioService.actualizarColegio(id, detallesColegio);
         return ResponseEntity.ok(colegioActualizado);
     }
 

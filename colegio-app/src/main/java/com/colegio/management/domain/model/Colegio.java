@@ -3,8 +3,6 @@ package com.colegio.management.domain.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
 @Entity
 public class Colegio {
@@ -15,7 +13,4 @@ public class Colegio {
 
     @Column(length = 100)
     private String nombre;
-
-    @OneToMany(mappedBy = "colegio")
-    private List<Curso> cursos;
 }

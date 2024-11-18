@@ -17,10 +17,7 @@ public class Curso {
     @Column(length = 10)
     private String salon;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "colegio_id")
     private Colegio colegio;
-
-    @OneToMany(mappedBy = "curso")
-    private List<Asignatura> asignaturas;
 }

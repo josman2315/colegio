@@ -20,14 +20,14 @@ public class Asignatura {
     @JoinColumn(name = "profesor_id")
     private Profesor profesor;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "estudiante_asignatura",
             joinColumns = @JoinColumn(name = "asignatura_id"),
             inverseJoinColumns = @JoinColumn(name = "estudiante_id"))
     private List<Estudiante> estudiantes;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "curso_id")
     private Curso curso;
 }

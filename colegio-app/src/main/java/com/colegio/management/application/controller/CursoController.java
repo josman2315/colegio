@@ -1,5 +1,6 @@
 package com.colegio.management.application.controller;
 
+import com.colegio.management.application.dto.CursoDTO;
 import com.colegio.management.application.service.curso.CursoService;
 import com.colegio.management.domain.model.Curso;
 import lombok.RequiredArgsConstructor;
@@ -16,26 +17,26 @@ public class CursoController {
     private final CursoService cursoService;
 
     @PostMapping
-    public ResponseEntity<Curso> crearCurso(@RequestBody Curso curso) {
-        Curso nuevoCurso = cursoService.crearCurso(curso);
+    public ResponseEntity<CursoDTO> crearCurso(@RequestBody CursoDTO curso) {
+        CursoDTO nuevoCurso = cursoService.crearCurso(curso);
         return ResponseEntity.ok(nuevoCurso);
     }
 
     @GetMapping
-    public ResponseEntity<List<Curso>> obtenerTodosLosCursos() {
-        List<Curso> cursos = cursoService.obtenerTodosLosCursos();
+    public ResponseEntity<List<CursoDTO>> obtenerTodosLosCursos() {
+        List<CursoDTO> cursos = cursoService.obtenerTodosLosCursos();
         return ResponseEntity.ok(cursos);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Curso> obtenerCursoPorId(@PathVariable Long id) {
-        Curso curso = cursoService.obtenerCursoPorId(id);
+    public ResponseEntity<CursoDTO> obtenerCursoPorId(@PathVariable Long id) {
+        CursoDTO curso = cursoService.obtenerCursoPorId(id);
         return ResponseEntity.ok(curso);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Curso> actualizarCurso(@PathVariable Long id, @RequestBody Curso detallesCurso) {
-        Curso cursoActualizado = cursoService.actualizarCurso(id, detallesCurso);
+    public ResponseEntity<CursoDTO> actualizarCurso(@PathVariable Long id, @RequestBody CursoDTO detallesCurso) {
+        CursoDTO cursoActualizado = cursoService.actualizarCurso(id, detallesCurso);
         return ResponseEntity.ok(cursoActualizado);
     }
 
