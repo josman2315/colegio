@@ -2,7 +2,10 @@ package com.colegio.management.application.mapper;
 
 import com.colegio.management.application.dto.ColegioDTO;
 import com.colegio.management.application.dto.CursoDTO;
+import com.colegio.management.domain.model.Colegio;
 import com.colegio.management.domain.model.Curso;
+import com.colegio.management.domain.repository.ColegioRepository;
+import jakarta.persistence.EntityNotFoundException;
 
 public class CursoMapper {
 
@@ -21,11 +24,18 @@ public class CursoMapper {
         return dto;
     }
 
-    public static Curso convertirAEntidad(CursoDTO cursoDTO) {
+    public static Curso convertirAEntidad(CursoDTO cursoDTO, ColegioRepository colegioRepository) {
         Curso curso = new Curso();
         curso.setCursoId(cursoDTO.getCursoId());
         curso.setGrado(cursoDTO.getGrado());
         curso.setSalon(cursoDTO.getSalon());
+
+        if (cursoDTO.getColegio() != null && cursoDTO.getColegio().getColegioId() != null) {
+            Colegio colegio = colegioRepository.findById(cursoDTO.getColegio().getColegioId())
+                    .orElseThrow(() -> new EntityNotFoundException("Colegio no encontrado con id: " + cursoDTO.getColegio().getColegioId()));
+            curso.setColegio(colegio);
+        }
+
         return curso;
     }
 }

@@ -22,6 +22,7 @@ public class CursoController {
         return ResponseEntity.ok(nuevoCurso);
     }
 
+
     @GetMapping
     public ResponseEntity<List<CursoDTO>> obtenerTodosLosCursos() {
         List<CursoDTO> cursos = cursoService.obtenerTodosLosCursos();

@@ -27,7 +27,7 @@ public class CursoServiceImpl implements CursoService {
     @Override
     @Transactional
     public CursoDTO crearCurso(CursoDTO cursoDTO) {
-        Curso curso = CursoMapper.convertirAEntidad(cursoDTO);
+        Curso curso = CursoMapper.convertirAEntidad(cursoDTO, colegioRepository);
         Curso cursoGuardado = cursoRepository.save(curso);
         return convertirADTO(cursoGuardado);
     }
@@ -42,6 +42,7 @@ public class CursoServiceImpl implements CursoService {
     }
 
     @Override
+    @Transactional
     public CursoDTO obtenerCursoPorId(Long id) {
         Optional<Curso> curso = cursoRepository.findById(id);
         return curso.map(CursoMapper::convertirADTO).orElse(null);

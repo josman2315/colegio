@@ -1,9 +1,6 @@
 package com.colegio.management.application.mapper;
 
-import com.colegio.management.application.dto.AsignaturaDTO;
-import com.colegio.management.application.dto.CursoDTO;
-import com.colegio.management.application.dto.EstudianteDTO;
-import com.colegio.management.application.dto.ProfesorDTO;
+import com.colegio.management.application.dto.*;
 import com.colegio.management.domain.model.Asignatura;
 
 import java.util.List;
@@ -36,13 +33,26 @@ public class AsignaturaMapper {
         }
 
         if (asignatura.getCurso() != null) {
-            CursoDTO cursoDTO = new CursoDTO();
-            cursoDTO.setCursoId(asignatura.getCurso().getCursoId());
-            cursoDTO.setGrado(asignatura.getCurso().getGrado());
-            cursoDTO.setSalon(asignatura.getCurso().getSalon());
+            CursoDTO cursoDTO = getCursoDTO(asignatura);
+
             dto.setCurso(cursoDTO);
         }
 
         return dto;
+    }
+
+    private static CursoDTO getCursoDTO(Asignatura asignatura) {
+        CursoDTO cursoDTO = new CursoDTO();
+        cursoDTO.setCursoId(asignatura.getCurso().getCursoId());
+        cursoDTO.setGrado(asignatura.getCurso().getGrado());
+        cursoDTO.setSalon(asignatura.getCurso().getSalon());
+
+        if (asignatura.getCurso().getColegio() != null) {
+            ColegioDTO colegioDTO = new ColegioDTO();
+            colegioDTO.setColegioId(asignatura.getCurso().getColegio().getColegioId());
+            colegioDTO.setNombre(asignatura.getCurso().getColegio().getNombre());
+            cursoDTO.setColegio(colegioDTO);
+        }
+        return cursoDTO;
     }
 }

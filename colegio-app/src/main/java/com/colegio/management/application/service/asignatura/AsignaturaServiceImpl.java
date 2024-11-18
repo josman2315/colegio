@@ -35,6 +35,7 @@ public class AsignaturaServiceImpl implements AsignaturaService {
     }
 
     @Override
+    @Transactional
     public AsignaturaDTO obtenerAsignaturaPorId(Long id) {
         Asignatura asignatura = asignaturaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Asignatura no encontrada con id: " + id));
         return toDTO(asignatura);
